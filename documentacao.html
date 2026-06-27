@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentação — Slark | Luz na Educação · FeCEAP 2026</title>
+<meta name="description" content="Documentação oficial do projeto Slark para a 34ª FeCEAP: problemática, justificativa, metodologia, diário de bordo completo e cronograma.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<meta name="theme-color" content="#05031F">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Serif:ital@0;1&family=Unbounded:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rosa:#FBE3EA;
+  --azul:#2E5BFF;
+  --azul-puro:#0033FF;
+  --profundo:#03005B;
+  --bg:#05031F;
+  --bg-2:#0A0735;
+  --card:#0E0B40;
+  --branco:#FFFFFF;
+  --texto:#E8E6FF;
+  --texto-suave:rgba(232,230,255,.66);
+  --linha:rgba(120,130,255,.16);
+  --display:"Bricolage Grotesque", sans-serif;
+  --serif:"Instrument Serif", serif;
+  --mono:"Unbounded", sans-serif;
+  --raio:24px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{font-family:var(--display);background:var(--bg);color:var(--texto);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--azul);color:var(--branco)}
+
+.glass-defs{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none}
+nav{position:fixed;top:18px;left:50%;z-index:100;width:min(1180px, calc(100% - 36px));transform:translateX(-50%);display:flex;align-items:center;justify-content:space-between;gap:18px;padding:13px 16px 13px 26px;border-radius:999px;background:rgba(14,11,64,.42);border:1px solid rgba(180,190,255,.18);box-shadow:0 1px 0 0 rgba(255,255,255,.18) inset,0 10px 30px rgba(0,0,0,.35),0 2px 10px rgba(0,0,0,.25);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4)}
+@media(max-width:880px){nav{padding:12px 14px 12px 22px}}
+.logo{font-family:var(--mono);font-weight:600;font-size:1.15rem;color:var(--branco);letter-spacing:-.02em;text-decoration:none}
+.logo span{color:var(--azul)}
+.nav-links{display:flex;gap:30px;align-items:center}
+.nav-links a{text-decoration:none;color:var(--texto-suave);font-weight:500;font-size:.92rem;position:relative;transition:color .25s}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-5px;height:2px;width:0;background:var(--azul);transition:width .3s cubic-bezier(.2,.8,.2,1)}
+.nav-links a:hover{color:var(--branco)}
+.nav-links a:hover::after{width:100%}
+.nav-cta{font-weight:600;font-size:.9rem;background:var(--azul);color:var(--branco);padding:11px 22px;border-radius:999px;text-decoration:none;transition:transform .25s,background .25s,box-shadow .25s;display:inline-block;box-shadow:0 6px 20px rgba(46,91,255,.4)}
+.nav-cta:hover{background:var(--azul-puro);transform:translateY(-2px);box-shadow:0 10px 28px rgba(46,91,255,.55)}
+.nav-cta::after{display:none}
+@media(max-width:880px){.nav-links a:not(.nav-cta){display:none}}
+
+.doc-hero{padding:170px 5vw 80px;position:relative;overflow:hidden;background:var(--bg-2)}
+.doc-hero::before{content:"";position:absolute;width:55vw;height:55vw;border-radius:50%;background:radial-gradient(circle,rgba(46,91,255,.35),transparent 65%);top:-22vw;right:-18vw;pointer-events:none}
+.doc-hero::after{content:"";position:absolute;width:36vw;height:36vw;border-radius:50%;background:radial-gradient(circle,rgba(251,227,234,.08),transparent 70%);bottom:-18vw;left:-10vw;pointer-events:none}
+.eyebrow{font-family:var(--mono);font-size:.68rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--rosa);margin-bottom:22px;display:block}
+.doc-hero h1{font-size:clamp(2.6rem,6vw,5rem);font-weight:700;line-height:1.04;letter-spacing:-.03em;max-width:18ch;color:var(--branco);position:relative;opacity:0;animation:rise 1s cubic-bezier(.2,.8,.2,1) .2s forwards}
+.doc-hero h1 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--azul)}
+.doc-hero p{margin-top:28px;max-width:58ch;font-size:1.08rem;line-height:1.7;color:var(--texto-suave);position:relative;opacity:0;animation:rise 1s cubic-bezier(.2,.8,.2,1) .4s forwards}
+.doc-meta{display:flex;flex-wrap:wrap;gap:12px;margin-top:38px;position:relative;opacity:0;animation:rise 1s cubic-bezier(.2,.8,.2,1) .55s forwards}
+.chip{font-family:var(--mono);font-size:.6rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;padding:10px 18px;border-radius:999px;border:1px solid var(--linha);color:var(--texto-suave)}
+.chip.azul{background:var(--azul);border-color:var(--azul);color:var(--branco)}
+@keyframes rise{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:translateY(0)}}
+
+.doc-wrap{display:grid;grid-template-columns:240px 1fr;gap:5vw;padding:90px 5vw;align-items:start;max-width:1500px}
+.toc{position:sticky;top:100px;display:flex;flex-direction:column;gap:2px}
+.toc .toc-title{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--texto-suave);margin-bottom:14px}
+.toc a{text-decoration:none;color:var(--texto-suave);font-size:.88rem;font-weight:500;padding:9px 14px;border-left:2px solid var(--linha);transition:color .25s,border-color .25s,background .25s}
+.toc a:hover{color:var(--branco)}
+.toc a.ativo{color:var(--branco);border-color:var(--azul);background:rgba(46,91,255,.12)}
+@media(max-width:880px){
+  .doc-wrap{grid-template-columns:1fr}
+  .toc{position:static;flex-direction:row;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+  .toc .toc-title{width:100%}
+  .toc a{border-left:none;border:1px solid var(--linha);border-radius:999px;font-size:.78rem}
+  .toc a.ativo{border-color:var(--azul)}
+}
+
+.bloco{margin-bottom:96px;scroll-margin-top:100px}
+.bloco .num-sec{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:var(--azul);display:inline-block;margin-bottom:10px}
+.bloco h2{font-size:clamp(1.8rem,3.6vw,2.8rem);font-weight:700;letter-spacing:-.02em;line-height:1.1;color:var(--branco);max-width:24ch}
+.bloco .corpo{margin-top:26px;font-size:1.02rem;line-height:1.8;color:var(--texto-suave);max-width:70ch}
+.bloco .corpo + .corpo{margin-top:18px}
+.bloco .corpo strong{color:var(--branco)}
+.destaque{margin-top:34px;background:var(--card);border-radius:var(--raio);padding:34px 36px;font-family:var(--serif);font-style:italic;font-size:clamp(1.25rem,2.2vw,1.7rem);line-height:1.45;color:var(--branco);border-left:4px solid var(--azul)}
+.destaque cite{display:block;margin-top:16px;font-family:var(--mono);font-style:normal;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--texto-suave)}
+
+.dados{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px;margin-top:36px}
+.dado{background:var(--card);border:1px solid var(--linha);border-radius:var(--raio);padding:30px 26px;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
+.dado:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(0,0,0,.4);border-color:rgba(46,91,255,.5)}
+.dado .v{font-weight:800;font-size:2.6rem;color:var(--azul);letter-spacing:-.04em;line-height:1}
+.dado .v small{font-size:.45em;font-weight:600}
+.dado .d{margin-top:12px;font-size:.88rem;line-height:1.55;color:var(--texto-suave)}
+.dado .f{margin-top:14px;font-family:var(--mono);font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(232,230,255,.4)}
+
+.linhas{margin-top:34px;display:flex;flex-direction:column}
+.linha{display:grid;grid-template-columns:64px 1fr;gap:24px;align-items:baseline;padding:18px 0;border-bottom:1px solid var(--linha);font-size:.98rem;line-height:1.65;color:var(--texto-suave);transition:padding-left .3s cubic-bezier(.2,.8,.2,1)}
+.linha:first-child{border-top:1px solid var(--linha)}
+.linha:hover{padding-left:10px}
+.linha .idx{font-family:var(--mono);font-size:.66rem;font-weight:500;letter-spacing:.12em;color:var(--azul)}
+.linha strong{color:var(--branco)}
+@media(max-width:560px){.linha{grid-template-columns:44px 1fr;gap:14px}}
+
+.timeline{margin-top:40px;position:relative;padding-left:34px}
+.timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--azul),rgba(46,91,255,.1));border-radius:99px}
+.evento{position:relative;padding-bottom:42px}
+.evento:last-child{padding-bottom:0}
+.evento::before{content:"";position:absolute;left:-32px;top:5px;width:14px;height:14px;border-radius:50%;background:var(--azul);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--azul)}
+.evento .quando{font-family:var(--mono);font-size:.62rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--azul)}
+.evento h3{margin-top:8px;font-size:1.18rem;font-weight:700;color:var(--branco);letter-spacing:-.01em}
+.evento p{margin-top:8px;font-size:.95rem;line-height:1.65;color:var(--texto-suave);max-width:64ch}
+.evento .status{display:inline-block;margin-left:10px;font-family:var(--mono);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;padding:4px 10px;border-radius:999px;vertical-align:middle}
+.evento .status.ok{background:rgba(46,91,255,.18);color:var(--azul)}
+.evento .status.atual{background:var(--azul);color:var(--branco)}
+.evento.futuro::before{background:var(--card);box-shadow:0 0 0 2px var(--linha)}
+
+/* sub-itens das entradas do diário */
+.contribs{margin-top:18px;display:flex;flex-direction:column;gap:0;border-left:2px solid var(--linha);padding-left:22px}
+.contrib{padding:14px 0;border-bottom:1px solid var(--linha)}
+.contrib:last-child{border-bottom:none}
+.contrib .nome{font-weight:700;color:var(--branco);font-size:.95rem}
+.contrib .desc{margin-top:4px;font-size:.9rem;line-height:1.6;color:var(--texto-suave)}
+.subsecao{margin-top:22px}
+.subsecao .titulo{font-family:var(--mono);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--rosa);margin-bottom:12px}
+.mini-lista{display:flex;flex-direction:column;gap:10px}
+.mini-lista .mi{display:grid;grid-template-columns:14px 1fr;gap:12px;font-size:.92rem;line-height:1.6;color:var(--texto-suave)}
+.mini-lista .mi .pt{width:7px;height:7px;border-radius:50%;background:var(--azul);margin-top:.5em}
+.mini-lista .mi strong{color:var(--branco)}
+
+.pilares{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;margin-top:36px}
+.pilar{background:var(--card);border:1px solid var(--linha);color:var(--branco);border-radius:var(--raio);padding:32px 28px;transition:transform .35s cubic-bezier(.2,.8,.2,1),background .35s,border-color .35s}
+.pilar:hover{transform:translateY(-6px);background:rgba(46,91,255,.16);border-color:rgba(46,91,255,.6)}
+.pilar .pn{font-family:var(--serif);font-style:italic;font-size:2rem;color:var(--rosa);line-height:1}
+.pilar h3{margin-top:14px;font-size:1.08rem;font-weight:700;letter-spacing:-.01em}
+.pilar p{margin-top:10px;font-size:.86rem;line-height:1.6;color:var(--texto-suave)}
+
+.func{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;margin-top:36px}
+.membro{background:var(--card);border:1px solid var(--linha);border-radius:var(--raio);padding:30px 26px;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
+.membro:hover{transform:translateY(-6px);box-shadow:0 20px 44px rgba(0,0,0,.4);border-color:rgba(46,91,255,.5)}
+.membro h3{font-size:1.1rem;font-weight:700;color:var(--branco)}
+.membro .papel{margin-top:4px;font-family:var(--mono);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--azul)}
+.membro p{margin-top:12px;font-size:.88rem;line-height:1.6;color:var(--texto-suave)}
+
+.fontes{margin-top:34px;display:flex;flex-direction:column;gap:0}
+.fonte-item{padding:18px 0;border-bottom:1px solid var(--linha);font-size:.95rem;line-height:1.65;color:var(--texto-suave)}
+.fonte-item:first-child{border-top:1px solid var(--linha)}
+.fonte-item strong{color:var(--branco)}
+
+.doc-cta{background:var(--bg-2);color:var(--branco);text-align:center;padding:110px 5vw;position:relative;overflow:hidden}
+.doc-cta::before{content:"";position:absolute;width:44vw;height:44vw;border-radius:50%;filter:blur(90px);background:rgba(46,91,255,.35);left:-12vw;top:-12vw;pointer-events:none}
+.doc-cta h2{font-size:clamp(1.9rem,4vw,3.2rem);font-weight:700;letter-spacing:-.02em;max-width:20ch;margin:0 auto;position:relative;color:var(--branco)}
+.doc-cta h2 em{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--rosa)}
+.doc-cta .btn{margin-top:40px;display:inline-block;font-weight:600;font-size:1rem;background:var(--azul);color:var(--branco);padding:16px 32px;border-radius:999px;text-decoration:none;box-shadow:0 10px 30px rgba(46,91,255,.4);transition:transform .25s,box-shadow .25s;position:relative}
+.doc-cta .btn:hover{transform:translateY(-3px);box-shadow:0 16px 40px rgba(46,91,255,.55)}
+
+footer{background:#03021A;color:var(--texto-suave);padding:54px 5vw;display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-content:space-between;font-size:.85rem;border-top:1px solid var(--linha)}
+footer .logo{color:var(--branco)}
+footer .moorning{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase}
+
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.reveal.on{opacity:1;transform:translateY(0)}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}
+  .reveal{opacity:1;transform:none}
+  .doc-hero h1,.doc-hero p,.doc-meta{opacity:1}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html">slark<span>.</span></a>
+  <div class="nav-links">
+    <a href="index.html#problema">O Problema</a>
+    <a href="index.html#metodo">Método Slark</a>
+    <a href="index.html#fluxo">Como funciona</a>
+    <a href="index.html#equipe">Equipe</a>
+    <a href="documentacao.html">Documentação</a>
+    <a class="nav-cta" href="https://wa.me/5511945699915?text=Ol%C3%A1%2C%20equipe%20Slark!%20%F0%9F%91%8B%20Conheci%20o%20M%C3%A9todo%20Slark%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20como%20levar%20essa%20educa%C3%A7%C3%A3o%20personalizada%20com%20IA%20para%20a%20minha%20escola." target="_blank" rel="noopener">Falar no WhatsApp</a>
+  </div>
+</nav>
+
+<header class="doc-hero">
+  <span class="eyebrow">Slark · Luz na Educação — Um projeto FeCEAP 2026</span>
+  <h1>Documentação <em>oficial</em> do projeto.</h1>
+  <p>Tudo o que sustenta o Método Slark em um só lugar: a problemática, a justificativa com dados, a metodologia, o Diário de Bordo completo e o cronograma rumo à 34ª FeCEAP.</p>
+  <div class="doc-meta">
+    <span class="chip azul">34ª FeCEAP</span>
+    <span class="chip">Moorning Group</span>
+    <span class="chip">Trilha Expositiva</span>
+    <span class="chip">2026</span>
+  </div>
+</header>
+
+<div class="doc-wrap">
+  <aside class="toc">
+    <span class="toc-title">Navegação</span>
+    <a href="#visao" class="ativo">Visão Geral</a>
+    <a href="#problema">Problemática</a>
+    <a href="#justificativa">Justificativa</a>
+    <a href="#metodologia">Metodologia</a>
+    <a href="#diario">Diário de Bordo</a>
+    <a href="#cronograma">Cronograma</a>
+    <a href="#avaliacao">Avaliação</a>
+    <a href="#responsaveis">Responsáveis</a>
+    <a href="#fontes">Fontes</a>
+  </aside>
+
+  <main>
+    <section class="bloco reveal" id="visao">
+      <span class="num-sec">§ 01</span>
+      <h2>Visão geral do projeto</h2>
+      <p class="corpo">A <strong>Slark</strong>, marca pertencente ao <strong>Moorning Group</strong>, é uma empresa que quer comunicar o simples na educação: trazer a introspecção dos alunos para uma educação feita para eles, individualmente — diferentemente do método massificado.</p>
+      <p class="corpo">O projeto <strong>Slark | Luz na Educação</strong> é desenvolvido pela Equipe Slark para a <strong>34ª FeCEAP</strong>, na Trilha Expositiva. A proposta apresenta o <strong>Método Slark</strong>: um ecossistema educacional que usa Inteligência Artificial para mapear as características de cada estudante e transformar a sala de aula com personalização, colaboração em Times e gamificação.</p>
+    </section>
+
+    <section class="bloco reveal" id="problema">
+      <span class="num-sec">§ 02</span>
+      <h2>Problemática: o método bancário foi uma falha.</h2>
+      <p class="corpo">O modelo de ensino regular vigente é herdeiro direto das <strong>Revoluções Industriais (1760–1945)</strong>, criado para formar mão de obra disciplinada e repetitiva. A própria disposição das salas de aula — carteiras enfileiradas voltadas estaticamente para um painel central comandado pelo docente — reproduz a organização das bancadas de trabalho sob a supervisão do mestre de obras.</p>
+      <p class="corpo">A fragmentação do conhecimento em disciplinas isoladas reflete a divisão técnica do trabalho fordista, na qual cada indivíduo executa uma tarefa ultraespecializada sem compreender a totalidade do processo. Os sistemas de avaliação quantitativa, por sua vez, operam como mecanismos de controle de qualidade, separando as unidades que atendem aos padrões daquelas consideradas "defeituosas".</p>
+      <p class="corpo">O cerne da problemática atual está no <strong>anacronismo crônico</strong> desse modelo: enquanto o século XXI exige inovação, trabalho colaborativo e resolução de problemas complexos, a escola insiste na passividade e na homogeneização — a sociedade precisa de sujeitos autônomos e criadores, mas a engrenagem institucional continua fabricando repetidores mecânicos de informação.</p>
+    </section>
+
+    <section class="bloco reveal" id="justificativa">
+      <span class="num-sec">§ 03</span>
+      <h2>Justificativa: o que os dados mostram</h2>
+      <p class="corpo">A redução da subjetividade dos estudantes a meras métricas anula a essência humana do processo educativo, gerando jovens desmotivados e despreparados para os desafios práticos do mercado e da vida em sociedade. A gravidade dessa disfunção é evidenciada por dados de organismos internacionais e pela pesquisa de campo da equipe.</p>
+      <div class="dados">
+        <div class="dado">
+          <div class="v">65<small>º</small></div>
+          <div class="d">Posição do Brasil no ranking de proficiência matemática do PISA, entre os patamares críticos de desempenho.</div>
+          <div class="f">PISA 2022 · OCDE</div>
+        </div>
+        <div class="dado">
+          <div class="v">+80<small>%</small></div>
+          <div class="d">Índice de dispersão de foco em salas de aula regulares, marcado por apatia, fadiga crônica e refúgio em dispositivos móveis.</div>
+          <div class="f">Estudos de campo</div>
+        </div>
+        <div class="dado">
+          <div class="v">1760<small>–1945</small></div>
+          <div class="d">Período das Revoluções Industriais em que o método bancário foi moldado — e do qual a escola nunca se desvencilhou.</div>
+          <div class="f">Fundamentação histórica</div>
+        </div>
+      </div>
+      <p class="corpo" style="margin-top:36px">Relatórios do Fórum Econômico Mundial corroboram esse cenário ao apontar que a maior parte do tempo letivo em modelos convencionais é desperdiçada em dinâmicas de memorização que não geram retenção cognitiva sustentável. Do ponto de vista psicopedagógico, o tratamento genérico e massificado ignora as especificidades cognitivas, os ritmos biológicos e as dúvidas individualizadas dos educandos.</p>
+      <blockquote class="destaque">
+        "Não gosto de alunos robôs, trabalho de uma forma em que os alunos aprendem sem se fingir."
+        <cite>Janaína · Professora e Psicopedagoga — Pesquisa de campo da Equipe Slark</cite>
+      </blockquote>
+    </section>
+
+    <section class="bloco reveal" id="metodologia">
+      <span class="num-sec">§ 04</span>
+      <h2>Metodologia: o Método Slark</h2>
+      <p class="corpo">A solução proposta é um ecossistema integrado que substitui a padronização pela personalização, organizado em seis etapas operacionais:</p>
+      <div class="linhas">
+        <div class="linha"><span class="idx">01</span><span><strong>Adesão e cadastro inicial:</strong> a escola adota o sistema por assinatura mensal e cadastra os alunos no Dashboard Administrativo.</span></div>
+        <div class="linha"><span class="idx">02</span><span><strong>Mapeamento de características:</strong> testes no App Slark definem as características cognitivas e geram o mapa de competências de cada aluno.</span></div>
+        <div class="linha"><span class="idx">03</span><span><strong>Formação dinâmica dos Times:</strong> grupos de 3 a 4 alunos com características diferentes que se somam.</span></div>
+        <div class="linha"><span class="idx">04</span><span><strong>Condução da aula:</strong> plano de Aula Slark guiado por prompts de IA, com etapas estruturadas, material alinhado à BNCC e quizzes do Kahoot!.</span></div>
+        <div class="linha"><span class="idx">05</span><span><strong>Estudo personalizado:</strong> o App Lumina explica conteúdos a partir de fotos do caderno, conforme o perfil de aprendizado, com mapas mentais ao fim de cada capítulo.</span></div>
+        <div class="linha"><span class="idx">06</span><span><strong>Mentoria e avaliação gamificada:</strong> mentoria por afinidade de características, notas de 0 a 10 e Selos a cada 50 pontos.</span></div>
+      </div>
+    </section>
+
+    <section class="bloco reveal" id="diario">
+      <span class="num-sec">§ 05</span>
+      <h2>Diário de Bordo completo</h2>
+      <p class="corpo"><strong>Slark | Luz na Educação — Um projeto FeCEAP 2026.</strong> Registro cronológico oficial das reuniões, decisões e progressos da equipe, redigido por Victor Pinaso nas versões física e digital. Lema: <em>"a educação está em boas mãos."</em></p>
+
+      <div class="timeline">
+        <div class="evento">
+          <span class="quando">24 de fevereiro de 2026</span><span class="status ok">Registro 01</span>
+          <h3>Formalização da equipe e fundamentação teórica</h3>
+          <p>No período letivo em questão, o grupo reuniu-se com o professor orientador para a formalização da equipe e a definição dos objetivos estratégicos da jornada. O foco inicial concentrou-se na fundamentação teórica e na estruturação organizacional do projeto. As responsabilidades foram distribuídas entre os integrantes para otimizar os processos de desenvolvimento:</p>
+          <div class="contribs">
+            <div class="contrib"><div class="nome">Pesquisa Acadêmica e Técnica — Lincoln Xavier e Tomás Galvão</div><div class="desc">Levantamento bibliográfico e exploração de dados técnicos pertinentes à área de atuação do serviço proposto.</div></div>
+            <div class="contrib"><div class="nome">Design e Identidade Visual — Vitor Oliveira</div><div class="desc">Liderança na concepção estética do projeto, responsável pela idealização e pelo "ar" que a empresa quer levar visualmente e de identidade.</div></div>
+            <div class="contrib"><div class="nome">Documentação e Registro — Victor Pinaso (com suporte de Vitor Oliveira)</div><div class="desc">Redação oficial do Diário de Bordo, garantindo o registro fidedigno das discussões e progressos diários.</div></div>
+          </div>
+        </div>
+
+        <div class="evento">
+          <span class="quando">04 de março de 2026</span><span class="status ok">Registro 02</span>
+          <h3>Estruturação da problemática e formulários</h3>
+          <p>Avanço na estruturação da problemática e na resolução de pendências relacionadas aos formulários da atividade proposta pelo professor. Contribuições individuais do dia:</p>
+          <div class="contribs">
+            <div class="contrib"><div class="nome">Vitor Oliveira Santos</div><div class="desc">Organização prévia do diário de bordo, adaptando-o ao formato personalizado do arquivo final do projeto.</div></div>
+            <div class="contrib"><div class="nome">Victor Pinaso</div><div class="desc">Reformulação do formulário e da planilha integrada, além da escrita formal definitiva do diário de bordo, nas versões física e digital.</div></div>
+            <div class="contrib"><div class="nome">Lincoln Miguel Diniz Xavier</div><div class="desc">Colaborou com Victor Pinaso na organização prévia do diário de bordo, focando no ajuste do conteúdo para a apresentação personalizada do grupo.</div></div>
+            <div class="contrib"><div class="nome">Tomás Galvão Oliveira</div><div class="desc">Revisão das tarefas de Vitor Oliveira e alinhamento estratégico do projeto junto ao professor.</div></div>
+          </div>
+
+          <div class="subsecao">
+            <div class="titulo">Objetivos concluídos</div>
+            <div class="mini-lista">
+              <div class="mi"><span class="pt"></span><span><strong>Alinhamento Metodológico:</strong> conferência com o orientador para validação do tema e diretrizes do trabalho.</span></div>
+              <div class="mi"><span class="pt"></span><span><strong>Estruturação de Relato:</strong> idealização prévia do escopo do projeto, focando nas conquistas e metas de curto prazo.</span></div>
+              <div class="mi"><span class="pt"></span><span><strong>Coleta de Dados Primários:</strong> elaboração de um formulário de consulta pública para avaliar a viabilidade, a responsabilidade social e o potencial de investimento do projeto.</span></div>
+              <div class="mi"><span class="pt"></span><span><strong>Pesquisa de campo</strong> e apresentação da problemática finalizada.</span></div>
+            </div>
+          </div>
+
+          <div class="subsecao">
+            <div class="titulo">Pendências e próximas etapas</div>
+            <div class="mini-lista">
+              <div class="mi"><span class="pt"></span><span><strong>Análise Temática:</strong> finalizar a delimitação do tema em estreita relação com os objetivos práticos traçados.</span></div>
+              <div class="mi"><span class="pt"></span><span><strong>Integração de Resultados:</strong> analisar os dados da pesquisa pública para que sejam devidamente atrelados ao projeto técnico.</span></div>
+              <div class="mi"><span class="pt"></span><span><strong>Desenvolvimento de Protótipo/Design:</strong> continuidade no refinamento visual sob a supervisão de Vitor Oliveira.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bloco reveal" id="cronograma">
+      <span class="num-sec">§ 06</span>
+      <h2>Cronograma: a jornada até a FeCEAP</h2>
+      <div class="timeline">
+        <div class="evento">
+          <span class="quando">Março</span><span class="status ok">Concluído</span>
+          <h3>Abertura</h3>
+          <p>02 a 06/03: apresentação docente · 09 a 13/03: abertura para alunos.</p>
+        </div>
+        <div class="evento">
+          <span class="quando">Abril</span><span class="status ok">Concluído</span>
+          <h3>Problematização e Justificativa</h3>
+          <p>Até 01/04: entrega da problematização · 30/04: entrega da justificativa.</p>
+        </div>
+        <div class="evento">
+          <span class="quando">Maio — Junho</span><span class="status atual">Em andamento</span>
+          <h3>1ª Banca Avaliadora e Inscrição Oficial</h3>
+          <p>28/05 a 03/06: primeira banca avaliadora · 08 a 12/06: inscrição oficial via formulário online, registrada junto ao orientador.</p>
+        </div>
+        <div class="evento futuro">
+          <span class="quando">Agosto</span>
+          <h3>Solução do Problema e 2ª Banca</h3>
+          <p>07/08: entrega da Solução do Problema · 21/08: resumo do projeto · 24 a 28/08: segunda banca avaliadora.</p>
+        </div>
+        <div class="evento futuro">
+          <span class="quando">Outubro — A reta final!</span>
+          <h3>Banca Final, 34ª FeCEAP e Premiação</h3>
+          <p>05 a 09/10: banca final · 16 e 17/10: 34ª FeCEAP · 17/10: premiação.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="bloco reveal" id="avaliacao">
+      <span class="num-sec">§ 07</span>
+      <h2>Critérios de avaliação da banca</h2>
+      <p class="corpo">Os avaliadores buscam excelência em cinco pilares, pontuando de 1 a 5 em cada um:</p>
+      <div class="pilares">
+        <div class="pilar"><div class="pn">1</div><h3>Criatividade e Inovação</h3><p>O projeto levanta uma questão original e apresenta uma solução ou conceito inovador?</p></div>
+        <div class="pilar"><div class="pn">2</div><h3>Documentação</h3><p>O Diário de Bordo apresenta objetivos, justificativas, fontes e conclusão bem registrados ao longo do tempo?</p></div>
+        <div class="pilar"><div class="pn">3</div><h3>Apresentação</h3><p>O grupo expõe com clareza e estética — e todos os integrantes dominam o conteúdo?</p></div>
+        <div class="pilar"><div class="pn">4</div><h3>Metodologia</h3><p>O problema foi bem definido, planejado e embasado em pesquisas de soluções semelhantes?</p></div>
+        <div class="pilar"><div class="pn">5</div><h3>Conclusão</h3><p>A meta original foi atingida e o grupo tem visão clara dos próximos passos do projeto?</p></div>
+      </div>
+    </section>
+
+    <section class="bloco reveal" id="responsaveis">
+      <span class="num-sec">§ 08</span>
+      <h2>Responsáveis e funções</h2>
+      <div class="func">
+        <div class="membro"><h3>Vitor Oliveira</h3><div class="papel">CEO · Idealização & Liderança Técnica</div><p>Concepção estética, design, identidade visual da marca e alinhamento estratégico do projeto.</p></div>
+        <div class="membro"><h3>Victor Pinaso</h3><div class="papel">Gestão Organizacional</div><p>Coordenação de riscos e redação oficial do Diário de Bordo, nas versões física e digital.</p></div>
+        <div class="membro"><h3>Lincoln Xavier</h3><div class="papel">Pesquisa & Narrativa Visual</div><p>Levantamento bibliográfico, pesquisa técnica, ritmo dos slides e consolidação da base intelectual.</p></div>
+        <div class="membro"><h3>Tomás Galvão</h3><div class="papel">Revisão Científica</div><p>Auditoria de fontes, processamento de dados métricos e sustentação estatística do projeto.</p></div>
+      </div>
+    </section>
+
+    <section class="bloco reveal" id="fontes">
+      <span class="num-sec">§ 09</span>
+      <h2>Fontes e referências</h2>
+      <div class="fontes">
+        <div class="fonte-item"><strong>PISA 2022</strong> — Programme for International Student Assessment, OCDE: desempenho do Brasil em proficiência matemática.</div>
+        <div class="fonte-item"><strong>OCDE / INEP (2023)</strong> — Dados nacionais de desempenho e contexto educacional brasileiro.</div>
+        <div class="fonte-item"><strong>Fórum Econômico Mundial</strong> — Relatórios sobre aproveitamento do tempo letivo e retenção cognitiva em modelos convencionais.</div>
+        <div class="fonte-item"><strong>Estudos de campo sobre atenção em sala de aula</strong> — Índices de dispersão de foco superiores a 80% em salas regulares.</div>
+        <div class="fonte-item"><strong>Pesquisa de campo da Equipe Slark (2026)</strong> — Entrevistas com educadores, incluindo a professora e psicopedagoga Janaína, e formulário de consulta pública sobre viabilidade e responsabilidade social.</div>
+        <div class="fonte-item"><strong>Paulo Freire — conceito de "educação bancária"</strong> — Fundamentação teórica da crítica ao modelo tradicional de ensino.</div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<section class="doc-cta">
+  <h2>Documentação Oficial da <em>Slark</em>.</h2>
+  <a class="btn" href="index.html">Voltar ao site principal</a>
+</section>
+
+<footer>
+  <a class="logo" href="index.html">slark<span>.</span></a>
+  <div class="moorning">Uma marca Moorning Group · 34ª FeCEAP · 2026</div>
+</footer>
+
+<script>
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)} });
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+const links = [...document.querySelectorAll('.toc a')];
+const secs = links.map(a=>document.querySelector(a.getAttribute('href')));
+function marcar(){
+  const centro = window.innerHeight*0.35;
+  let atual = 0;
+  secs.forEach((s,i)=>{ if(s && s.getBoundingClientRect().top <= centro) atual = i; });
+  links.forEach((a,i)=>a.classList.toggle('ativo', i===atual));
+}
+let agendado=false;
+window.addEventListener('scroll',()=>{
+  if(agendado) return; agendado=true;
+  requestAnimationFrame(()=>{ marcar(); agendado=false; });
+},{passive:true});
+marcar();
+</script>
+</body>
+</html>
